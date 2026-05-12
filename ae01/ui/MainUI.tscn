@@ -1,0 +1,124 @@
+[gd_scene load_steps=12 format=3 uid="uid://mainui001"]
+
+[ext_resource type="Script" path="res://simulation/grid_world.gd" id="1_gw"]
+[ext_resource type="Script" path="res://simulation/agent.gd" id="2_ag"]
+[ext_resource type="Script" path="res://display/circumplex.gd" id="3_cx"]
+[ext_resource type="Script" path="res://display/af_face.gd" id="4_af"]
+[ext_resource type="Script" path="res://display/stream_bars.gd" id="5_sb"]
+[ext_resource type="Script" path="res://display/dim_bars.gd" id="6_db"]
+[ext_resource type="Script" path="res://display/emotion_label.gd" id="7_el"]
+[ext_resource type="Script" path="res://ui/control_panel.gd" id="8_cp"]
+[ext_resource type="Script" path="res://ui/scenario_player.gd" id="9_sp"]
+[ext_resource type="Script" path="res://ui/main_ui.gd" id="10_mu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ag"]
+radius = 8.0
+
+[node name="MainUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("10_mu")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.07, 0.07, 0.09, 1.0)
+
+[node name="HSplit" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+split_offset = 540
+
+[node name="SimPanel" type="Panel" parent="HSplit"]
+custom_minimum_size = Vector2(480, 0)
+
+[node name="SimViewportContainer" type="SubViewportContainer" parent="HSplit/SimPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+
+[node name="SimViewport" type="SubViewport" parent="HSplit/SimPanel/SimViewportContainer"]
+size = Vector2i(512, 512)
+render_target_update_mode = 4
+
+[node name="GridWorld" type="Node2D" parent="HSplit/SimPanel/SimViewportContainer/SimViewport"]
+script = ExtResource("1_gw")
+
+[node name="Agent" type="CharacterBody2D" parent="HSplit/SimPanel/SimViewportContainer/SimViewport/GridWorld"]
+position = Vector2(48, 48)
+script = ExtResource("2_ag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HSplit/SimPanel/SimViewportContainer/SimViewport/GridWorld/Agent"]
+shape = SubResource("CircleShape2D_ag")
+
+[node name="Camera2D" type="Camera2D" parent="HSplit/SimPanel/SimViewportContainer/SimViewport/GridWorld"]
+position = Vector2(256, 256)
+zoom = Vector2(1.4, 1.4)
+
+[node name="RightPanel" type="ScrollContainer" parent="HSplit"]
+custom_minimum_size = Vector2(320, 0)
+
+[node name="RightContent" type="VBoxContainer" parent="HSplit/RightPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(300, 0)
+
+[node name="EmotionLabel" type="VBoxContainer" parent="HSplit/RightPanel/RightContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("7_el")
+
+[node name="FaceContainer" type="SubViewportContainer" parent="HSplit/RightPanel/RightContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 200)
+stretch = true
+
+[node name="FaceViewport" type="SubViewport" parent="HSplit/RightPanel/RightContent/FaceContainer"]
+size = Vector2i(280, 200)
+render_target_update_mode = 4
+
+[node name="AfFace" type="Node2D" parent="HSplit/RightPanel/RightContent/FaceContainer/FaceViewport"]
+position = Vector2(140, 100)
+script = ExtResource("4_af")
+
+[node name="CircumplexContainer" type="SubViewportContainer" parent="HSplit/RightPanel/RightContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 230)
+stretch = true
+
+[node name="CircumplexViewport" type="SubViewport" parent="HSplit/RightPanel/RightContent/CircumplexContainer"]
+size = Vector2i(280, 230)
+render_target_update_mode = 4
+
+[node name="Circumplex" type="Node2D" parent="HSplit/RightPanel/RightContent/CircumplexContainer/CircumplexViewport"]
+position = Vector2(140, 115)
+script = ExtResource("3_cx")
+
+[node name="TabContainer" type="TabContainer" parent="HSplit/RightPanel/RightContent"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 130)
+
+[node name="Streams" type="VBoxContainer" parent="HSplit/RightPanel/RightContent/TabContainer"]
+layout_mode = 2
+script = ExtResource("5_sb")
+
+[node name="Dimensions" type="VBoxContainer" parent="HSplit/RightPanel/RightContent/TabContainer"]
+layout_mode = 2
+script = ExtResource("6_db")
+
+[node name="ControlPanel" type="VBoxContainer" parent="HSplit/RightPanel/RightContent"]
+layout_mode = 2
+script = ExtResource("8_cp")
+
+[node name="ScenarioPlayer" type="Node" parent="."]
+script = ExtResource("9_sp")

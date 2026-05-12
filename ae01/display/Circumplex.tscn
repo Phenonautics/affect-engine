@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://circumplex001"]
+
+[ext_resource type="Script" path="res://display/circumplex.gd" id="1_cx"]
+
+[node name="Circumplex" type="Node2D"]
+position = Vector2(110, 110)
+script = ExtResource("1_cx")
