@@ -1,7 +1,7 @@
 # Experiment: The Affect Engine
 ## A Computational Model of Synthetic Affect for Embodied Agents
 
-**Phenonautics Institute | Qualia Robotics**  
+**Phenonautics Institute**  
 **Status:** Open Research · Public Experiment  
 **Repository:** `phenonautics/affect-engine`
 
